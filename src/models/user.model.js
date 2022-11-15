@@ -1,3 +1,4 @@
+var Post = require("./post.model.js");
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define(
     "user",
@@ -12,6 +13,12 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
     },
+    {
+      defaultScope: {
+        attributes: { exclude: ["password"] },
+      },
+    },
+
     {
       paranoid: true,
     }

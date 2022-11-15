@@ -1,0 +1,3 @@
+{"level":"info","message":"POST /posts request from ::1 at Tue Nov 15 2022 12:02:27 GMT+0300 (Arabian Standard Time)"}
+{"level":"info","message":"POST /posts/2 request from ::1 at Tue Nov 15 2022 12:02:57 GMT+0300 (Arabian Standard Time)"}
+{"level":"info","message":"PUT /posts/2 request from ::1 at Tue Nov 15 2022 12:03:03 GMT+0300 (Arabian Standard Time)"}

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 var bcrypt = require("bcrypt");
+const { throwError } = require("../utils/error.js");
 
 let create = async (req, res) => {
   const data = {
@@ -13,12 +14,9 @@ let create = async (req, res) => {
     email: req.body.email,
   };
 
-  let user = User.create(data).catch((err) => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while creating the Tutorial.",
-    });
-  });
+  let user = await User.create(data).catch((err) =>
+    throwError(res, err.message, "User could not be created!")
+  );
   await res.send({
     message: "user created successfully",
   });
@@ -30,22 +28,18 @@ let findAll = async (req, res) => {
     ...(req.query.email && { email: { [Op.like]: `%${req.query.name}%` } }),
   };
 
-  let users = await User.findAll({ where: queryObject }).catch((err) => {
-    res.status(500).send({
-      message: err.message || "Some error occurred while retrieving tutorials.",
-    });
-  });
+  let users = await User.findAll({ where: queryObject }).catch((err) =>
+    throwError(res, err.message, "Users could not be fetched!")
+  );
   await res.send(users);
 };
 
 let findOne = async (req, res) => {
   const id = req.params.id;
 
-  let user = await User.findByPk(id).catch((err) => {
-    res.status(500).send({
-      message: "Error retrieving Tutorial with id=" + id,
-    });
-  });
+  let user = await User.findByPk(id).catch((err) =>
+    throwError(res, err.message, "User could not be fetched!")
+  );
   if (user) {
     res.send(user);
   } else {
@@ -60,11 +54,7 @@ let update = async (req, res) => {
 
   User.update(req.body, {
     where: { id: id },
-  }).catch((err) => {
-    res.status(500).send({
-      message: "Error updating Tutorial with id=" + id,
-    });
-  });
+  }).catch((err) => throwError(res, err.message, "User could not be updated!"));
   await res.send({
     message: "Tutorial was updated successfully.",
   });
@@ -74,11 +64,7 @@ let destroy = async (req, res) => {
   const id = req.params.id;
   let deletedUser = User.destroy({
     where: { id: id },
-  }).catch((err) => {
-    res.status(500).send({
-      message: "Could not delete Tutorial with id=" + id,
-    });
-  });
+  }).catch((err) => throwError(res, err.message, "User could not be deleted!"));
   await res.send({
     message: "Tutorial was deleted successfully!",
   });
@@ -86,13 +72,15 @@ let destroy = async (req, res) => {
 
 let login = async (req, res) => {
   let user = await User.findOne({
+    attributes: ["password", "email", "id"],
     where: { email: req.body.email },
-  });
+  }).catch((err) => throwError(res, err.message, "User could not be fetched!"));
   if (!user) {
     return res.status(404).send({
       message: "User Not found.",
     });
   }
+
   if (!bcrypt.compareSync(req.body.password, user.password)) {
     return res.status(401).send({
       accessToken: null,
@@ -103,6 +91,8 @@ let login = async (req, res) => {
   var token = jwt.sign(
     {
       id: user.id,
+      email: user.email,
+      name: user.name,
     },
     process.env.JWT_SECRET,
     {

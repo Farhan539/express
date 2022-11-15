@@ -1,0 +1,7 @@
+{"info":"notNull Violation: post.UserId cannot be null","level":"error","message":"User could not be created!"}
+{"info":"notNull Violation: post.UserId cannot be null","level":"error","message":"User could not be created!"}
+{"info":"notNull Violation: post.UserId cannot be null","level":"error","message":"User could not be created!"}
+{"info":"notNull Violation: post.UserId cannot be null","level":"error","message":"Post could not be created!"}
+{"info":"Cannot add or update a child row: a foreign key constraint fails (`express`.`posts`, CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`))","level":"error","message":"Post could not be created!"}
+{"info":"Cannot add or update a child row: a foreign key constraint fails (`express`.`posts`, CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`))","level":"error","message":"Post could not be created!"}
+{"info":"Cannot add or update a child row: a foreign key constraint fails (`express`.`posts`, CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`))","level":"error","message":"Post could not be created!"}

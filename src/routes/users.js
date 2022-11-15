@@ -1,13 +1,20 @@
 var express = require("express");
 var router = express.Router();
 const users = require("../controllers/user.controller.js");
-const { validate } = require("../validators/user.js");
+const {
+  checkRules,
+  signupValidationRules,
+  loginValidationRules,
+  getAllValidationRules,
+  parameterValidationRules,
+  updateValidationRules,
+} = require("../validators/user.js");
 
-router.post("/signup", validate("create"), users.create);
-router.get("/", users.findAll);
-router.get("/:id", users.findOne);
-router.put("/:id", users.update);
-router.delete("/:id", users.destroy);
-router.post("/login", users.login);
+router.post("/signup", signupValidationRules, checkRules, users.create);
+router.get("/", getAllValidationRules, checkRules, users.findAll);
+router.get("/:id", parameterValidationRules, checkRules, users.findOne);
+router.put("/:id", updateValidationRules, checkRules, users.update);
+router.delete("/:id", parameterValidationRules, checkRules, users.destroy);
+router.post("/login", loginValidationRules, checkRules, users.login);
 
 module.exports = router;

@@ -1,0 +1,4 @@
+{"info":"Unknown column 'post.UserId' in 'where clause'","level":"error","message":"Posts could not be fetched!"}
+{"info":"Unknown column 'post.UserId' in 'where clause'","level":"error","message":"Posts could not be fetched!"}
+{"info":"Unknown column 'post.UserId' in 'where clause'","level":"error","message":"Posts could not be fetched!"}
+{"info":"Unknown column 'UserId' in 'field list'","level":"error","message":"Posts could not be fetched!"}
